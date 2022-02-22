@@ -1,21 +1,29 @@
 side<-bs4DashSidebar(skin = 'light',collapsed = T,
                      bs4SidebarMenu(id = 'mainM',
-                                    bs4SidebarMenuItem(text = "Data input",icon = icon('database'),tabName = 'dataIn',badgeColor = 'warning'),
+                                    bs4SidebarMenuItem(text = "Data input",icon = icon('database'),tabName = 'dataIn',badgeColor = 'warning',selected = T),
                                     bs4SidebarMenuItem(text = "Data processing",icon = icon('cogs'),tabName = 'dataPr',badgeColor = 'warning'),
-                                  bs4SidebarMenuItem(text = "Visualization",icon = icon('chart-bar'),tabName = 'vizT',badgeColor = 'warning',selected = T)
+                                  bs4SidebarMenuItem(text = "Visualization",icon = icon('chart-bar'),tabName = 'vizT',badgeColor = 'warning')
                      )
 )
 
 
 cbar<-bs4DashControlbar(id = "lmn",disable = T,skin = 'light')
 
-nav<-bs4DashNavbar(title = bs4DashBrand(tags$b("VisualSiC!"),image = "logo.jpg"),leftUi = uiOutput('navLeft'),rightUi = uiOutput('navRight'),status = 'primary')
+nav<-bs4DashNavbar(title = bs4DashBrand(tags$b("VisualSiC!"),image = "logo.jpg"),leftUi = uiOutput('navLeft'),rightUi = uiOutput('navRight'))
 
 
 body<-bs4DashBody(
   bs4TabItems(
     bs4TabItem(tabName = "dataIn",
                useCss("style.css"),
+               tags$head(
+                 HTML(
+                 '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+                   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+                   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+                   <link rel="manifest" href="/site.webmanifest">'
+                 )
+               ),
                fluidRow(
                  column(3,useShinyalert(),
                         fileInput('genDIn',"Genetics Data set (cbmc.rna)",accept = ".txt",width = "100%"),

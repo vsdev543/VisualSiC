@@ -31,3 +31,7 @@
   
   gap: 20px;
 }
+
+.dark-mode select{
+  color:#333 !important;
+}
