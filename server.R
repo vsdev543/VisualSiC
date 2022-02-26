@@ -18,7 +18,7 @@ server<-function(input,output,session){
   output$genDdt<-renderDT({
     req(input$genDIn)
     head(df(),10)
-  },options=list(scrollX=T),server = FALSE)
+  },options=list(scrollX=T, dom = 't'),server = FALSE)
   
   
   output$annDdt<-renderDT({
@@ -49,8 +49,8 @@ server<-function(input,output,session){
         )
         )
       }
-    }),
-    actionBttn('addPr',"Add Step",style = 'stretch',color = 'primary',block = T)
+    }),hr(),
+    actionBttn('addPr',"Add Step",style = 'stretch',color = 'primary',block = T,icon = icon('plus'))
     )
     
   })
@@ -180,7 +180,10 @@ server<-function(input,output,session){
     saveRDS(r$cbmc,file)
   })
   
-  callModule(viz,id="viz",cbmc=reactive(r$cbmc))
+  k<-readRDS("data/cbmc.Rds")
+  
+  # callModule(viz,id="viz",cbmc=reactive(r$cbmc))
+  callModule(viz,id="viz",cbmc=reactive(k))
   # callModule(viz,id="viz")
   
   

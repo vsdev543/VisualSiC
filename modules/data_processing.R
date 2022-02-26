@@ -78,13 +78,14 @@ eval(fun)
 
 
 
+cbmc<-readRDS("data/cbmc.Rds")
+
+head(cbmc@meta.data)
 
 
+FeaturePlot(cbmc,"MYH11")
 
-
-
-
-
+test.seurat <- subset(cbmc, subset = Cluster == "C2 (CM)")
 
 
 

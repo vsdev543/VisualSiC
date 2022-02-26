@@ -35,3 +35,12 @@
 .dark-mode select{
   color:#333 !important;
 }
+
+.main-svg{
+  border-radius: 10px;
+  
+  animation-name: fromL;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+}
+

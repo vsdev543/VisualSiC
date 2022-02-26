@@ -3,11 +3,12 @@ viz_UI <- function(id) {
   tagList(
     fluidRow(
       column(8,
-             uiOutput(ns('genePlot'))
+             plotlyOutput(ns('genePlot'),height = "590px")
              ),
       column(4,
              # selectizeInput(ns('cluster_name'), 'Cluster', choices = NULL,width = "100%"),
-             selectizeInput(ns('gene_name'), 'Gene', choices = NULL,width = "100%"),
+             selectizeInput(ns('gene_name'), 'Gene', choices = NULL,width = "100%",multiple=T),
+             selectizeInput(ns('cluster_name'), 'Cluster', choices = NULL,width = "100%",multiple=T),
              uiOutput(ns('snapui'))
              )
     ),
@@ -23,14 +24,13 @@ viz <- function(input, output, session,cbmc) {
   # cbmc<-readRDS("data/cbmc.Rds")
   
   observe({
-    if(!is.null(cbmc())){
-    updateSelectizeInput(session = session,inputId = "gene_name",choices = rownames(
+    k<-rownames(
       as.matrix(cbmc()@assays$RNA@data)
-    ),server = T)
-      
-      updateSelectizeInput(session = session,inputId = "cluster_name",choices = rownames(
-        unique(cbmc()@meta.data[,"Cluster"])
-      ),server = T)
+    )
+    
+    if(!is.null(cbmc())){
+      updateSelectizeInput(session = session,inputId = "gene_name",choices = k,server = T,selected = k[1:10])
+      updateSelectizeInput(session = session,inputId = "cluster_name",choices = cbmc()@meta.data$Cluster,server = T)
       }
   })
   
@@ -45,14 +45,32 @@ viz <- function(input, output, session,cbmc) {
         )
   })
   
-  output$genePlot<-renderUI({
+  output$genePlot<-renderPlotly({
     req(input$gene_name)
-    renderPlot(FeaturePlot(cbmc(), input$gene_name),height = 490)
+    
+    obj<-cbmc()
+    
+    if(!is.null(input$cluster_name)){
+      obj<-subset(obj, subset = Cluster %in% input$cluster_name)
+    }
+    
+    plot<-FeaturePlot(obj, input$gene_name)
+    
+    plot
   })
   
   output$snapui<-renderUI({
     renderPlotly(
       VlnPlot(cbmc(),input$gene_name)
+    )
+  })
+  
+  output$cbarUI<-renderUI({
+    tagList(
+      bs4Card(width = 12,
+              title = "Cluster",collapsible = T,closable = F,collapsed = T,maximizable = F,label = "lmnop",
+              "Osanda"
+              )
     )
   })
 }
