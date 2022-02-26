@@ -160,6 +160,8 @@ server<-function(input,output,session){
     
     r$cbmc<-cbmc
     
+    saveRDS(cbmc,"data/cbmc.Rds")
+    
     rm(cbmc,cbmc.rna)
                  }
     )

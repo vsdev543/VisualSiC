@@ -29,9 +29,9 @@ body<-bs4DashBody(
                         fileInput('genDIn',"Genetics Data set (cbmc.rna)",accept = ".txt",width = "100%"),
                         fileInput('annDIn',"Annotation (cell_annotation)",width = "100%"),
                         tags$i(icon("info-circle")," Input handlers above are reactive, once data is uploaded, only the first 10 rows will be read.
-                               Data read will be displayed in the right side. \n Confirm that the data are as it intend to be and click on below.
-                               "),hr(),
-                        actionBttn(inputId = "lockD","Lock Data",icon = icon('lock'),style = 'stretch',block = T,color = 'primary')
+                               Data read will be displayed in the right side. \n Confirm that the data are as it intend and go to the data proccessing tab.
+                               "),#hr(),
+                        #actionBttn(inputId = "lockD","Lock Data",icon = icon('lock'),style = 'stretch',block = T,color = 'primary')
                  ),
                  column(9,
                         tabsetPanel(
