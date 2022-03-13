@@ -16,6 +16,7 @@ body<-bs4DashBody(
   bs4TabItems(
     bs4TabItem(tabName = "dataIn",
                useCss("style.css"),
+               
                tags$head(
                  HTML(
                  '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -25,7 +26,7 @@ body<-bs4DashBody(
                  )
                ),
                fluidRow(
-                 column(3,useShinyalert(),
+                 column(3,useShinyalert(force = T),
                         fileInput('genDIn',"Genetics Data set (cbmc.rna)",accept = ".txt",width = "100%"),
                         fileInput('annDIn',"Annotation (cell_annotation)",width = "100%"),
                         tags$i(icon("info-circle")," Input handlers above are reactive, once data is uploaded, only the first 10 rows will be read.
@@ -90,4 +91,4 @@ body<-bs4DashBody(
   )
 )
 
-ui<-dashboardPage(header = nav,sidebar = side,body = body,controlbar = cbar,title = "VisualSiC!",fullscreen = TRUE,dark = F)
+ui<-dashboardPage(header = nav,sidebar = side,body = body,controlbar = NULL,title = "VisualSiC!",fullscreen = TRUE,dark = F)

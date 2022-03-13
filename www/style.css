@@ -44,3 +44,18 @@
   animation-timing-function: ease-in-out;
 }
 
+/**
+.shiny-notification{
+  width:30vw !important;
+  position: fixed !important;
+  left: 50vw;
+  top: 50vh;
+  transform: translateX(-50%)
+  
+}
+
+.progress-text:after{
+  content: "\A";
+}
+
+**/

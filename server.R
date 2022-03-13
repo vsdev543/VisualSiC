@@ -134,6 +134,14 @@ server<-function(input,output,session){
     )
   })
   
+  # observe({
+  #   withProgress(message = "Data processing on progress",detail = "This will take a while",session = session,
+  #                 while(TRUE){
+  #                   setProgress(value = 0.05,message = "Creating Seurat object",session = session)
+  #                  }
+  #   )
+  # })
+  
   
   observeEvent(input$doDPr,{
     req(input$genDIn)
@@ -180,10 +188,10 @@ server<-function(input,output,session){
     saveRDS(r$cbmc,file)
   })
   
-  k<-readRDS("data/cbmc.Rds")
+  # k<-readRDS("data/cbmc.Rds")
   
   # callModule(viz,id="viz",cbmc=reactive(r$cbmc))
-  callModule(viz,id="viz",cbmc=reactive(k))
+  callModule(viz,id="viz",cbmc=reactive(r$cbmc),procViz=reactive(r$procViz))
   # callModule(viz,id="viz")
   
   
@@ -192,7 +200,9 @@ server<-function(input,output,session){
     r$dSteps<-NULL
   })
   
-  
+  observe({
+    print(input$annDIn$datapath)
+  })
   
   
   
