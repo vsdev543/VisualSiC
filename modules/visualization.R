@@ -6,23 +6,17 @@ viz_UI <- function(id) {
              plotlyOutput(ns('genePlot'),height = "590px")%>%withSpinner()
              ),
       column(3,
-             # selectizeInput(ns('cluster_name'), 'Cluster', choices = NULL,width = "100%"),
              selectizeInput(ns('gene_name'), 'Gene', choices = NULL,width = "100%",multiple=F),
              sliderInput(ns('gene_val'),label = "Range",min = 0,max = 10,step = 0.01,value = c(1,10),width = "100%"),
              selectizeInput(ns('cluster_name'), 'Cluster', choices = NULL,width = "100%",multiple=T),
              awesomeCheckbox(ns('hideNa'),"Hide Other clusters",value = F)
              )
-    )#,
-    # hr(),
-    # uiOutput(ns("main_viz"))
-    # ,DTOutput(ns('someD'))
+    )
   )
 }
 
 viz <- function(input, output, session,cbmc,procViz) {
-# viz <- function(input, output, session) {
-  
-  # cbmc<-cbmcx()
+
   cbmcD<-reactive({
     if(!procViz()){
       if(file.exists("data/cbmc.Rds")){
@@ -34,58 +28,6 @@ viz <- function(input, output, session,cbmc,procViz) {
     }
     })
   
-  #####
-  # observe({
-  #   k<-rownames(
-  #     as.matrix(cbmc()@assays$RNA@data)
-  #   )
-  #   
-  #   if(!is.null(cbmc())){
-  #     updateSelectizeInput(session = session,inputId = "gene_name",choices = k,server = T,selected = k[1:10])
-  #     updateSelectizeInput(session = session,inputId = "cluster_name",choices = cbmc()@meta.data$Cluster,server = T)
-  #     }
-  # })
-  # 
-  # 
-  # output$main_viz<-renderUI({
-  #   div(class="grid-2",
-  #       renderPlot(VariableFeaturePlot(cbmc())),
-  #       renderPlotly(DimPlot(cbmc(), reduction = "pca")),
-  #       renderPlotly(ElbowPlot(cbmc())),
-  #       renderPlotly(DimPlot(cbmc(), reduction = "umap"))
-  #       
-  #       )
-  # })
-  # 
-  # output$genePlot<-renderPlotly({
-  #   req(input$gene_name)
-  #   
-  #   obj<-cbmc()
-  #   
-  #   if(!is.null(input$cluster_name)){
-  #     obj<-subset(obj, subset = Cluster %in% input$cluster_name)
-  #   }
-  #   
-  #   plot<-FeaturePlot(obj, input$gene_name)
-  #   
-  #   plot
-  # })
-  # 
-  # output$snapui<-renderUI({
-  #   renderPlotly(
-  #     VlnPlot(cbmc(),input$gene_name)
-  #   )
-  # })
-  # 
-  # output$cbarUI<-renderUI({
-  #   tagList(
-  #     bs4Card(width = 12,
-  #             title = "Cluster",collapsible = T,closable = F,collapsed = T,maximizable = F,label = "lmnop",
-  #             "Osanda"
-  #             )
-  #   )
-  # })
-  ######
   
   observe({
     req(cbmcD())
