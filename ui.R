@@ -1,8 +1,8 @@
 side<-bs4DashSidebar(skin = 'light',collapsed = T,
                      bs4SidebarMenu(id = 'mainM',
-                                    bs4SidebarMenuItem(text = "Data input",icon = icon('database'),tabName = 'dataIn',badgeColor = 'warning'),
+                                    bs4SidebarMenuItem(text = "Data input",icon = icon('database'),tabName = 'dataIn',badgeColor = 'warning',selected = T),
                                     bs4SidebarMenuItem(text = "Data processing",icon = icon('cogs'),tabName = 'dataPr',badgeColor = 'warning'),
-                                  bs4SidebarMenuItem(text = "Visualization",icon = icon('chart-bar'),tabName = 'vizT',badgeColor = 'warning',selected = T)
+                                  bs4SidebarMenuItem(text = "Visualization",icon = icon('chart-bar'),tabName = 'vizT',badgeColor = 'warning')
                      )
 )
 
