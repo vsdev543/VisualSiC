@@ -128,20 +128,12 @@ server<-function(input,output,session){
         color = "info",
         icon=icon('cog'),
         title = "AddMetaData",
-        code("cbmc <- AddMetaData(object = cbmc, metadata = cell_annotation, col.name = 'Cluster')")
+        code("cbmc <- AddMetaData(object = cbmc, metadata = cell_annotation)")
       ),
       timelineStart(color = "secondary")
     )
   })
-  
-  # observe({
-  #   withProgress(message = "Data processing on progress",detail = "This will take a while",session = session,
-  #                 while(TRUE){
-  #                   setProgress(value = 0.05,message = "Creating Seurat object",session = session)
-  #                  }
-  #   )
-  # })
-  
+
   
   observeEvent(input$doDPr,{
     req(input$genDIn)
@@ -164,7 +156,7 @@ server<-function(input,output,session){
     
     setProgress(value = 0.8,message = "Adding meta data",session = session)
     
-    cbmc<-AddMetaData(object = cbmc, metadata = dfa(), col.name = 'Cluster')
+    cbmc<-AddMetaData(object = cbmc, metadata = dfa())
     
     r$cbmc<-cbmc
     
@@ -191,7 +183,7 @@ server<-function(input,output,session){
   # k<-readRDS("data/cbmc.Rds")
   
   # callModule(viz,id="viz",cbmc=reactive(r$cbmc))
-  callModule(viz,id="viz",cbmc=reactive(r$cbmc),procViz=reactive(r$procViz))
+  callModule(viz,id="viz",cbmc=reactive(r$cbmc),procViz=reactive(r$procViz),parent=session)
   # callModule(viz,id="viz")
   
   
@@ -200,25 +192,26 @@ server<-function(input,output,session){
     r$dSteps<-NULL
   })
   
-  observe({
-    print(input$annDIn$datapath)
-  })
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  # observeEvent(input$addMD,{
+  #   
+  # withProgress(message = "Reading annotation data file",detail = "This will take a while",session = session,{
+  # 
+  #   ann1<-read.delim(input$nwAnn$datapath, row.names=1)
+  #   
+  #   setProgress(value = 0.5,message = "Adding meta data",session = session)
+  #   
+  #   r$cbmc<-AddMetaData(object = r$cbmc, metadata = dfa())
+  #   
+  #   setProgress(value = 0.8,message = "Saving data file",session = session)
+  #   
+  #   saveRDS(r$cbmc,"data/cbmc.Rds")
+  #   
+  # })
+  #   shinyalert(title = "Done",text = "Annotation added to the dataset",type = 'success',timer = 5000)
+  # })
+  # 
+  # output$annNwdt<-renderDT({
+  #   head(read.delim(input$nwAnn$datapath, row.names=1))
+  # })
   
 }

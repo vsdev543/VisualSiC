@@ -7,7 +7,7 @@ side<-bs4DashSidebar(skin = 'light',collapsed = T,
 )
 
 
-cbar<-bs4DashControlbar(id = "lmn",skin = 'light',uiOutput(NS(namespace = "viz",id = 'cbarUI')),overlay = F,pinned = T)
+cbar<-bs4DashControlbar(id = "lmn",skin = 'light',uiOutput(NS(namespace = "viz",id = 'cbarUI')),overlay = F,pinned = T,width = 300)
 
 nav<-bs4DashNavbar(title = bs4DashBrand(tags$b("VisualSiC!"),image = "logo.jpg"),leftUi = uiOutput('navLeft'),rightUi = uiOutput('navRight'))
 
@@ -81,7 +81,26 @@ body<-bs4DashBody(
                       uiOutput("dPro")
                       )
                       )
-                      )
+                      )#,
+                      # br(),
+                      # div(style="background-color:#fff;color:#333;padding:10px;border-radius:10px;",
+                      #     h3("Add metadata"),
+                      #     tags$i("Once data processing steps and adding default annottion is done, use this panel to add more annotations to the dataset."),
+                      #     hr(),
+                      #     fluidRow(
+                      #       column(6,
+                      #              fileInput(inputId = 'nwAnn',label = "Metadata",width = '100%',)
+                      #              ),
+                      #       column(6,
+                      #              textInput('addMDcolN','Column name to save metadata',placeholder = "Cluster 1"),
+                      #              actionBttn('addMD',"Add Metadata",style = 'stretch',color = 'primary',block = T,icon = icon('plus'))
+                      #              )
+                      #     )
+                      # ),
+                      # 
+                      # div(style="background-color:#fff;color:#333;padding:10px;border-radius:10px;",
+                      #     DTOutput('annNwdt')
+                      # )
                       )
                )
     ),
@@ -91,4 +110,4 @@ body<-bs4DashBody(
   )
 )
 
-ui<-dashboardPage(header = nav,sidebar = side,body = body,controlbar = NULL,title = "VisualSiC!",fullscreen = TRUE,dark = F)
+ui<-dashboardPage(header = nav,sidebar = side,body = body,controlbar = cbar,title = "VisualSiC!",fullscreen = TRUE,dark = F)

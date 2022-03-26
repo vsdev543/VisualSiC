@@ -44,6 +44,10 @@
   animation-timing-function: ease-in-out;
 }
 
+.control-sidebar{
+  padding: 10px;
+}
+
 /**
 .shiny-notification{
   width:30vw !important;
