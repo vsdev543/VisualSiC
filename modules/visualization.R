@@ -3,8 +3,17 @@ viz_UI <- function(id) {
   tagList(
     fluidRow(
       column(9,
-             plotlyOutput(ns('genePlot'),height = "590px")%>%withSpinner()#,
-             # DTOutput(ns("testDT"))
+             plotlyOutput(ns('genePlot'),height = "590px")%>%withSpinner(),
+             hr(),
+             fluidRow(
+               column(6,
+                      plotlyOutput(ns('hist1'))
+                      ),
+               column(6,
+                      plotlyOutput(ns('hist2'))
+                      )
+             ),
+             DTOutput(ns("testDT"))
              ),
       column(3,
              selectizeInput(ns('gene_name'), 'Gene', choices = NULL,width = "100%",multiple=F),
@@ -40,10 +49,11 @@ viz <- function(input, output, session,cbmc,procViz,parent) {
   })
   
   fetchx<-reactive({
-    k<-'Cluster'
+    k<-c('Cluster','nCount_RNA','nFeature_RNA')
     
     if(!is.null(input$metaTfilter)){
-      k<-c(k,input$metaTfilter)  
+      k<-c(k,input$metaTfilter)
+      k<-unique(k)
     }
     
     FetchData(object = cbmcD(), vars = c("UMAP_2", "UMAP_1", input$gene_name,k))
@@ -175,6 +185,33 @@ viz <- function(input, output, session,cbmc,procViz,parent) {
     }
     
     k
+  })
+  
+  
+  
+  output$testDT<-renderDT(fetch())
+  
+  
+  output$hist1<-renderPlotly({
+    data<-fetchx()[!is.na(fetchx()[,input$gene_name]),]
+    
+    plot_ly(x = data[,"nCount_RNA"], type = "histogram")%>%
+      layout(
+        xaxis=list(title="nCount_RNA"),
+        yaxis=list(title="Count"),
+        title="nCount_RNA Histogram"
+      )
+  })
+  
+  output$hist2<-renderPlotly({
+    data<-fetchx()[!is.na(fetchx()[,input$gene_name]),]
+    
+    plot_ly(x = data[,"nFeature_RNA"], type = "histogram")%>%
+      layout(
+        xaxis=list(title="nFeature_RNA"),
+        yaxis=list(title="Count"),
+        title="nFeature_RNA Histogram"
+      )
   })
   
 }

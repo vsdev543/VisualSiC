@@ -44,6 +44,10 @@
   animation-timing-function: ease-in-out;
 }
 
+.g-gtitle{
+  margin-top: 10px;
+}
+
 .control-sidebar{
   padding: 10px;
 }
