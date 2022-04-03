@@ -88,16 +88,6 @@ viz <- function(input, output, session,cbmc,procViz,parent) {
     gene<-input$gene_name
     data<-fetch()
     
-
-    # if(!input$hideNa){
-    # data<-data%>%
-    #   filter((!!as.symbol(gene)>=input$gene_val[1] & !!as.symbol(gene)<=input$gene_val[2]) | is.na(!!as.symbol(gene)))
-    # }else{
-    #   data<-data%>%
-    #     filter(!!as.symbol(gene)>=input$gene_val[1] & !!as.symbol(gene)<=input$gene_val[2])
-    # }
-    
-    
     if(!all(is.na(data[,gene]))){
     if(nrow(data)>0){
     plot_ly(data=data,x=~UMAP_1,y=~UMAP_2,color = data[,gene],
@@ -188,25 +178,24 @@ viz <- function(input, output, session,cbmc,procViz,parent) {
   })
   
   
+  data<-reactive({
+    fetch()[!is.na(fetch()[,input$gene_name]),]
+  })
   
-  output$testDT<-renderDT(fetch())
+  output$testDT<-renderDT(data())
   
-  
+
   output$hist1<-renderPlotly({
-    data<-fetchx()[!is.na(fetchx()[,input$gene_name]),]
-    
-    plot_ly(x = data[,"nCount_RNA"], type = "histogram")%>%
+    plot_ly(x = data()[,"nCount_RNA"], type = "histogram")%>%
       layout(
         xaxis=list(title="nCount_RNA"),
         yaxis=list(title="Count"),
         title="nCount_RNA Histogram"
       )
   })
-  
+
   output$hist2<-renderPlotly({
-    data<-fetchx()[!is.na(fetchx()[,input$gene_name]),]
-    
-    plot_ly(x = data[,"nFeature_RNA"], type = "histogram")%>%
+    plot_ly(x = data()[,"nFeature_RNA"], type = "histogram")%>%
       layout(
         xaxis=list(title="nFeature_RNA"),
         yaxis=list(title="Count"),
