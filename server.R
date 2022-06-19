@@ -187,6 +187,7 @@ server<-function(input,output,session){
   # callModule(viz,id="viz")
   
   
+  callModule(de_Server,id='de',cbmc=reactive(r$cbmc),procViz=reactive(r$procViz))
   
   observeEvent(input$resetDPr,{
     r$dSteps<-NULL
@@ -213,5 +214,9 @@ server<-function(input,output,session){
   # output$annNwdt<-renderDT({
   #   head(read.delim(input$nwAnn$datapath, row.names=1))
   # })
+  
+  observeEvent(input$mainM,{
+    print(input$mainM)
+  })
   
 }

@@ -16,12 +16,14 @@ viz_UI <- function(id) {
              DTOutput(ns("testDT"))
              ),
       column(3,
+             div(style="background-color:#fff;padding:10px; border-radius:10px;",
              selectizeInput(ns('gene_name'), 'Gene', choices = NULL,width = "100%",multiple=F),
              sliderInput(ns('gene_val'),label = "Range",min = 0,max = 10,step = 0.01,value = c(1,10),width = "100%"),
              # selectizeInput(ns('cluster_name'), 'Cluster', choices = NULL,width = "100%",multiple=T),
              pickerInput(ns('cluster_name'), 'Cluster', choices = NULL,width = "100%",multiple=T,options = list(`actions-box` = TRUE,`live-search`=TRUE)),
              awesomeCheckbox(ns('hideNa'),"Hide Other clusters",value = F),
              uiOutput(ns('otherF'))
+             )
              )
     )
   )

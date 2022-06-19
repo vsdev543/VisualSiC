@@ -21,6 +21,7 @@ library(Seurat)
 library(umap)
 library(gridExtra)
 
+library(manhattanly)
 
 options(shiny.maxRequestSize=30*1024^3)
 
@@ -54,3 +55,4 @@ args=list(
 )
 
 source("modules/visualization.R")
+source("modules/deTesting.R")

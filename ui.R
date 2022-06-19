@@ -2,12 +2,20 @@ side<-bs4DashSidebar(skin = 'light',collapsed = T,
                      bs4SidebarMenu(id = 'mainM',
                                     bs4SidebarMenuItem(text = "Data input",icon = icon('database'),tabName = 'dataIn',badgeColor = 'warning',selected = T),
                                     bs4SidebarMenuItem(text = "Data processing",icon = icon('cogs'),tabName = 'dataPr',badgeColor = 'warning'),
-                                  bs4SidebarMenuItem(text = "Visualization",icon = icon('chart-bar'),tabName = 'vizT',badgeColor = 'warning')
+                                    bs4SidebarMenuItem(text = "Visualization",icon = icon('chart-bar'),tabName = 'vizT',badgeColor = 'warning'),
+                                    bs4SidebarMenuItem(text = "DE Testing",icon = icon('vials'),tabName = 'deT',badgeColor = 'warning')
                      )
 )
 
 
-cbar<-bs4DashControlbar(id = "lmn",skin = 'light',uiOutput(NS(namespace = "viz",id = 'cbarUI')),overlay = F,pinned = T,width = 300)
+cbar<-bs4DashControlbar(id = "lmn",skin = 'light',overlay = F,pinned = T,width = 300,
+                        conditionalPanel(condition = "input.mainM == 'vizT'",
+                          uiOutput(NS(namespace = "viz",id = 'cbarUI'))
+                        ),
+                        conditionalPanel(condition = "input.mainM != 'vizT'",
+                                         tags$i("No ammended control options for the selected tab of the app.")
+                        )
+                        )
 
 nav<-bs4DashNavbar(title = bs4DashBrand(tags$b("VisualSiC!"),image = "logo.jpg"),leftUi = uiOutput('navLeft'),rightUi = uiOutput('navRight'))
 
@@ -106,7 +114,10 @@ body<-bs4DashBody(
     ),
     bs4TabItem(tabName = "vizT",
                viz_UI(id="viz")
-               )
+               ),
+    bs4TabItem(tabName = "deT",
+               de_UI(id="de")
+    )
   )
 )
 

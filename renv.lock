@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.1.2",
+    "Version": "4.1.3",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -1107,6 +1107,18 @@
       "Repository": "CRAN",
       "Hash": "cdc87ecd81934679d1557633d8e1fe51",
       "Requirements": []
+    },
+    "manhattanly": {
+      "Package": "manhattanly",
+      "Version": "0.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "83d5dcb8ff75fc35d391ce41777524ae",
+      "Requirements": [
+        "ggplot2",
+        "magrittr",
+        "plotly"
+      ]
     },
     "matrixStats": {
       "Package": "matrixStats",
